@@ -31,7 +31,7 @@ class Dog
             self.update
         else
             DB[:conn].execute("INSERT INTO dogs (name, breed) VALUES (?, ?)", self.name, self.breed)
-            @id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
+            self.id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
         end
     end
 
@@ -42,7 +42,7 @@ class Dog
     end
 
     def self.new_from_db(row)
-        Dog.new(name: row[1], breed: row[2], id: row[0])
+        self.new(name: row[1], breed: row[2], id: row[0])
     end
 
     def self.all
